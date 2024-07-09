@@ -539,12 +539,13 @@ class OBJEX_AddonPreferences(bpy.types.AddonPreferences, logging_util.AddonLoggi
     )
 
     def draw(self, context):
-        addon_updater_ops.check_for_update_background()
+        # turned off auto-update (commented the addon_updater_ops lines below)
+        #addon_updater_ops.check_for_update_background()
         logging_util.AddonLoggingPreferences.draw(self, context)
         self.layout.prop(self, 'colorspace_default_strategy')
         self.layout.prop(self, 'monkeyPatch_view3d_copybuffer')
-        addon_updater_ops.update_settings_ui(self, context)
-        addon_updater_ops.update_notice_box_ui(self, context)
+        #addon_updater_ops.update_settings_ui(self, context)
+        #addon_updater_ops.update_notice_box_ui(self, context)
 
 
 classes = (
