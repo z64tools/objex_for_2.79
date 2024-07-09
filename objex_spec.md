@@ -130,6 +130,37 @@ the `f` directive now supports an optional `vc` parameter
 use colors and certain vertices to use shading, with
 the result being interpolated in-game (N64-specific)
 
+#### `file`
+
+`file filename segment common` (optional)
+
+the `file` directive is used by z64convert for multi-file conversions,
+a common example being scenes and rooms
+
+- e.g. `file "scene.zscene" 0x02000000 common`
+- e.g. `file "room_0.zmap" 0x03000000`
+- e.g. `file "room_1.zmap" 0x03000000`
+- `common` is optional and specifies which file will hold common data
+blobs that are found in the other files (aka if the same texture or
+material is referenced by both `room_0` and `room_1`, it will be placed
+inside `scene` in order to save space)
+- extensions can be baked into these (as shown above), but are optional
+- z64convert specifically expects scenes to end with `.zscene` and
+rooms to end in `.zmap` or `.zroom`
+- Blender empties are used for specifying which groups belong in
+which files; this plugin specifically only assumes an empty specifies
+a file if it ends with `.zscene`, `.zmap`, or `.zroom`, but this spec
+doesn't enforce any particular naming rules or require/expect plugin
+implementations to use empties (or their equivalents) at all; all groups
+inside an empty defining a file are considered to be part of that file
+- the user either is or isn't using files (unlike `usemtl`/`clearmtl`,
+there is no way to unset `file` in order to specify the following data
+does not belong in a specific file)
+- each file may be specified only once, e.g. you can not specify
+`file "scene.zscene"` in two separate places to append two separate
+groups to it (please set the file, then append both groups before
+switching to a different file)
+
 # .mtl files
 
 objex supports the standard Wavefront mtl specification,
