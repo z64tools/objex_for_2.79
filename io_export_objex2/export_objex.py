@@ -79,6 +79,7 @@ class ObjexWriter():
         self.context = context
         self.objects = []
         self.options = ObjexWriter.default_options.copy()
+        self.prevFilename = ""
     
     def add_target_objects(self, objects):
         self.objects.extend(objects)
@@ -386,6 +387,17 @@ class ObjexWriter():
                 face_index_pairs.sort(key=sort_func)
 
                 del sort_func
+
+            # write 'file' directive when applicable
+            # empties are used to manage scenes and rooms
+            # file "scene.zscene" 0x02000000 common
+            # file "room_0.zmap" 0x03000000
+            if ob.parent and ob.parent.type == 'EMPTY' and ob.parent.name != self.prevFilename:
+                self.prevFilename = ob.parent.name
+                if self.prevFilename.endswith(".zscene"):
+                    fw('file %s 0x02000000 common\n' % util.quote(self.prevFilename))
+                elif self.prevFilename.endswith(".zmap") or self.prevFilename.endswith(".zroom"):
+                    fw('file %s 0x03000000\n' % util.quote(self.prevFilename))
 
             util.detect_zztag(log, ob.name)
             fw('g %s\n' % util.quote(ob.name))
