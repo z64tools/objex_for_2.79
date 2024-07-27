@@ -885,6 +885,9 @@ def write_collision_material(fw, collision):
         fw('attrib collision.HOOKSHOT\n')
     if collision.steep:
         fw('attrib collision.FLOOR_STEEP\n')
+    # TODO waterbox attrib accepts optional params, write them here
+    if collision.waterbox_enabled:
+        fw('attrib collision.WATERBOX\n')
     if collision.warp_enabled:
         fw('attrib collision.WARP,exit={}\n'.format(collision.warp_exit_index))
     if collision.camera_enabled:

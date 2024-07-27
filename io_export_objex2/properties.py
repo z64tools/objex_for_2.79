@@ -311,6 +311,11 @@ class ObjexMaterialCollisionProperties(bpy.types.PropertyGroup):
             description='Steep Surface (makes the player slide)',
             default=False
         )
+    waterbox_enabled = bpy.props.BoolProperty(
+            name='Waterbox',
+            description='When enabled, each triangle island with this material assigned becomes a waterbox',
+            default=False
+        )
     warp_enabled = bpy.props.BoolProperty(
             name='Exit',
             description='Scene exit to warp somewhere',

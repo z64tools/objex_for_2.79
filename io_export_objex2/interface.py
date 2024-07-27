@@ -1342,6 +1342,9 @@ class OBJEX_PT_material(bpy.types.Panel):
             self.layout.prop(col, 'wall_damage')
             self.layout.prop(col, 'hookshot')
             self.layout.prop(col, 'steep')
+            # TODO waterbox attrib accepts optional params, expose them through ui
+            # TODO hide other collision ui if (waterbox_enabled)
+            self.layout.prop(col, 'waterbox_enabled')
 
             def draw_optional(prop_enable, prop_data):
                 if getattr(col, prop_enable):
